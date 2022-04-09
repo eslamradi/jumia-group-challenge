@@ -49,7 +49,7 @@ class QueryBuilder implements DatabaseBuilderInterface
      * set query builder table name
      *
      * @param string $table
-     * @return void
+     * @return self
      */
     public function from($table)
     {

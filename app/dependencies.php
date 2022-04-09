@@ -1,5 +1,6 @@
 <?php
 
+use App\Lib\PhoneParser;
 use Core\Container;
 use Core\Definitions\DatabaseConnectionInterface;
 use Core\Lib\Renderer;
@@ -22,9 +23,10 @@ return function (Container $container) {
      * Database PDO Connection Instance
      */
     $container->set(DatabaseConnectionInterface::class, function(ContainerInterface $c){
-        $settings = $c->get(ConfigInterface::class);
-        $pdo = new $settings['db']['driver']();
-        $pdo = $pdo->connect($settings['db']['credentials']);
+        $config = $c->get(ConfigInterface::class);
+        $driver = $config['db']['driver'];
+        $pdo = new $driver();
+        $pdo = $pdo->connect($config['db']['credentials']);
         return $pdo;
     });
 
@@ -42,4 +44,17 @@ return function (Container $container) {
      * view renderer instance
      */
     $container->set(RendererInterface::class, new Renderer);
+
+    /**
+     * Phone parser instance
+     */
+
+     $container->set(PhoneParser::class, function(ContainerInterface $c) {
+        $config = $c->get(ConfigInterface::class);
+        return new PhoneParser($config['countries'] ?? []);
+     });
+
+     /**
+     * Phone repository instance
+     */
 };

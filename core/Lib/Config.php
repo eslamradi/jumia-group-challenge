@@ -1,5 +1,7 @@
 <?php
 
+namespace Core\Lib; 
+
 use Core\Definitions\ConfigInterface;
 
 /**
@@ -19,9 +21,9 @@ class Config implements ConfigInterface
      *
      * @param array $rules
      */
-    public function __construct($rules)
+    public function __construct($roles)
     {
-        $this->rules = $rules;    
+        $this->roles = $roles;    
     }
 
     /**

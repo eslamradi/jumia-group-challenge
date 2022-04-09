@@ -6,6 +6,9 @@ use Core\Definitions\RequestInterface;
 use Core\Definitions\RouterInterface;
 use Core\Exceptions\Router\ActionDoesNotExistException;
 use Psr\Container\ContainerInterface;
+use ReflectionClass;
+
+use function PHPSTORM_META\argumentsSet;
 
 /**
  * Application Instance Class
@@ -61,6 +64,22 @@ class App
         if(! method_exists($controller, $methodName)) {
             throw new ActionDoesNotExistException;
         }
-        return call_user_func_array([$controller, $methodName], [$request]);
+        $arguments = $this->resolveActionDependencies($controllerName, $methodName);
+        return call_user_func_array([$controller, $methodName], $arguments);
+    }
+
+    public function resolveActionDependencies($class, $method) {
+        $params = [];
+        $item = new ReflectionClass($class);
+        if($item->hasMethod($method)) {
+            $method = $item->getMethod($method);
+            
+            foreach ($method->getParameters() as $param) {
+                if ($type = $param->getType()) {
+                    $params[] = $this->container->get($type->getName());
+                }
+            }
+        }
+        return $params;
     }
 }
