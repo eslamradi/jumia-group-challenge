@@ -12,7 +12,7 @@ return function (Container $container) {
             'db' => [
                 'driver' => SqliteConnection::class,
                 'credentials' => [
-                    'path' => __DIR__ .'/../database/sample.db'
+                    'path' => BASEDIR .'database/sample.db'
                 ]
             ]
         ];
