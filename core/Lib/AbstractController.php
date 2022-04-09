@@ -2,6 +2,7 @@
 
 namespace Core\Lib;
 
+use Core\Definitions\RendererInterface;
 use Core\Lib\QueryBuilder;
 use Core\Lib\Renderer;
 
@@ -29,7 +30,8 @@ abstract class AbstractController {
      *
      * @param QueryBuilder $db
      */
-    public function __construct(QueryBuilder $db){
+    public function __construct(QueryBuilder $db, RendererInterface $renderer){
         $this->db = $db;
+        $this->renderer = $renderer;
     }
 }

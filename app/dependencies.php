@@ -2,6 +2,8 @@
 
 use Core\Container;
 use Core\Definitions\DatabaseConnectionInterface;
+use Core\Lib\Renderer;
+use Core\Definitions\RendererInterface;
 use Core\Lib\QueryBuilder;
 use Core\Lib\Router;
 use Psr\Container\ContainerInterface;
@@ -35,4 +37,9 @@ return function (Container $container) {
         $queryBuilder = new QueryBuilder($connection);
         return $queryBuilder;
     });
+
+    /**
+     * view renderer instance
+     */
+    $container->set(RendererInterface::class, new Renderer);
 };
