@@ -13,19 +13,20 @@ class Paginator
      * @return array
      */
     public function paginate($queryString, array $records, $limit = 10) {
-        $offset = ($queryString['page'] ?? 1 - 1) * $limit;
+        $page = !empty($queryString['page']) ? $queryString['page'] : 1; 
+        $offset = ($page - 1) * $limit;
         $data = array_slice($records, $offset, $limit, true);
         $pagesCount = ceil(count($records) / $limit);
         return [
-            'currentPage' => $queryString['page'],
+            'currentPage' => $page,
             'pagesCount' => $pagesCount,
-            'data' => $data,
+            'records' => $data,
             'total' => count($records),
-            'links' => $this->buildUrlQuery($queryString, $queryString['page'] ?? 1, $pagesCount)
+            'links' => $this->buildUrlQuery($queryString, $page, $pagesCount)
         ];
     }
 
-    public function buildUrlQuery($queryString, $page  = 1, $pagesCount) {
+    public function buildUrlQuery($queryString, $page, $pagesCount) {
         $links = [];
         for ($i=1; $i <= $pagesCount; $i++) { 
             if($i == $page) {

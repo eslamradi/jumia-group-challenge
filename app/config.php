@@ -1,6 +1,8 @@
 <?php
 
 use Core\Container;
+use Core\Definitions\ConfigInterface;
+use Core\Lib\Config;
 use Core\Lib\SqliteConnection;
 use Psr\Container\ContainerInterface;
 
@@ -8,8 +10,8 @@ use Psr\Container\ContainerInterface;
  * Attach app config intsance to container
  */
 return function (Container $container) {
-    $container->set(ConfigInterface::class, function(ContainerInterface $c){
-        return [
+    $container->set(ConfigInterface::class, function(ContainerInterface $c) {
+        $config = new Config([
             'db' => [
                 'driver' => SqliteConnection::class,
                 'credentials' => [
@@ -38,6 +40,7 @@ return function (Container $container) {
                     'regex' => '\(256\)\ ?\d{9}$'
                 ]
             ]
-        ];
+        ]);
+        return $config;
     });
 };

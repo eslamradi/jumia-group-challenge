@@ -4,8 +4,10 @@ namespace App\Controllers;
 
 use App\Lib\PhoneParser;
 use App\Repositories\PhoneRepository;
+use Core\Definitions\ConfigInterface;
 use Core\Definitions\RequestInterface;
 use Core\Lib\AbstractController;
+use Core\Lib\Config;
 use Core\Lib\Paginator;
 use Core\Lib\Request;
 
@@ -17,14 +19,15 @@ class HomeController extends AbstractController
      */
     public function index(Request $request, PhoneParser $parser, PhoneRepository $phoneRepository,Paginator $paginator) {
         $phones = $this->db->from('customer')->get('phone');
-        $records = $parser->parse($phones);
+        $records = $parser->parse($phones, $this->config->get('countries', []));
         $queryString = $request->queryString();
         if(!empty($queryString)) {
             $phoneRepository->setRecords($records);
             $records = $phoneRepository->filterBy($queryString);
         }
         $data = $paginator->paginate($queryString, $records);
-        return json_encode($data, JSON_PRETTY_PRINT);
-        // return $this->renderer->load('index', $data);
+        $data['countries'] = $this->config->get('countries', []);
+        // return json_encode($data, JSON_PRETTY_PRINT);
+        return $this->renderer->load('index', $data);
     }
 }

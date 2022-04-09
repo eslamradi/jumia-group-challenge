@@ -9,28 +9,20 @@ use Core\Definitions\ConfigInterface;
  */
 class PhoneParser 
 {
-    protected $countries;
 
-    protected $cleanData;
-
-    public function __construct($countries)
-    {
-        $this->countries = $countries;
-    }
-
-    public function parse($phones) {
+    public function parse($phones, $countries) {
         foreach($phones as $key => $phone) {
-            $parsedPhone = $this->getParsedNumber($phone);
-            $this->cleanData[$key] = $parsedPhone;
+            $parsedPhone = $this->getParsedNumber($phone, $countries);
+            $parsedPhones[$key] = $parsedPhone;
         }
-        return $this->cleanData;
+        return $parsedPhones ?? [];
     }
 
-    public function getParsedNumber($phone) {
+    public function getParsedNumber($phone, $countries) {
         $parsed = [
             'state' => 'NOK'
         ];
-        foreach($this->countries as $key => $country) {
+        foreach($countries as $key => $country) {
             preg_match('/' . substr($country['regex'], 0, 10) . '/', $phone, $matches);
             
             if (sizeof($matches) > 0) {

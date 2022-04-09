@@ -1,13 +1,16 @@
 <?php
 
-use App\Lib\PhoneParser;
+use Psr\Container\ContainerInterface;
 use Core\Container;
 use Core\Definitions\DatabaseConnectionInterface;
-use Core\Lib\Renderer;
 use Core\Definitions\RendererInterface;
+use Core\Lib\Renderer;
+use Core\Lib\Config;
 use Core\Lib\QueryBuilder;
 use Core\Lib\Router;
-use Psr\Container\ContainerInterface;
+use Core\Lib\SqliteConnection;
+use App\Lib\PhoneParser;
+use Core\Definitions\ConfigInterface;
 
 /**
  * define and attach application dependencies to the container
@@ -24,9 +27,10 @@ return function (Container $container) {
      */
     $container->set(DatabaseConnectionInterface::class, function(ContainerInterface $c){
         $config = $c->get(ConfigInterface::class);
-        $driver = $config['db']['driver'];
-        $pdo = new $driver();
-        $pdo = $pdo->connect($config['db']['credentials']);
+        $connection = $config->get('db');
+        // ['driver'];
+        $pdo = new $connection['driver']();
+        $pdo = $pdo->connect($connection['credentials']);
         return $pdo;
     });
 
@@ -49,12 +53,10 @@ return function (Container $container) {
      * Phone parser instance
      */
 
-     $container->set(PhoneParser::class, function(ContainerInterface $c) {
-        $config = $c->get(ConfigInterface::class);
-        return new PhoneParser($config['countries'] ?? []);
-     });
+     $container->set(PhoneParser::class,  new PhoneParser());
 
      /**
      * Phone repository instance
      */
+
 };

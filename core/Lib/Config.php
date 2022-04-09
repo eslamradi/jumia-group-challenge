@@ -1,7 +1,8 @@
 <?php
 
-namespace Core\Lib; 
+namespace Core\Lib;
 
+use ArrayObject;
 use Core\Definitions\ConfigInterface;
 
 /**
@@ -21,7 +22,7 @@ class Config implements ConfigInterface
      *
      * @param array $rules
      */
-    public function __construct($roles)
+    public function __construct(array $roles)
     {
         $this->roles = $roles;    
     }
@@ -34,7 +35,7 @@ class Config implements ConfigInterface
      * @return array|string|null
      */
     public function get($key, $default = null) {
-        if(isset($this->roles[$key])) {
+        if($this->roles[$key] !== null) {
             return $this->roles[$key];
         }
         return $default;
