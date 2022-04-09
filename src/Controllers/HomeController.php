@@ -18,13 +18,13 @@ class HomeController extends AbstractController
     public function index(Request $request, PhoneParser $parser, PhoneRepository $phoneRepository,Paginator $paginator) {
         $phones = $this->db->from('customer')->get('phone');
         $records = $parser->parse($phones);
-        $filters = $request->queryString();
-        if(!empty($filters)) {
+        $queryString = $request->queryString();
+        if(!empty($queryString)) {
             $phoneRepository->setRecords($records);
-            $records = $phoneRepository->filterBy($filters);
+            $records = $phoneRepository->filterBy($queryString);
         }
-        $data = $paginator->paginate($records);
-        // return json_encode($data, JSON_PRETTY_PRINT);
-        return $this->renderer->load('index', $data);
+        $data = $paginator->paginate($queryString, $records);
+        return json_encode($data, JSON_PRETTY_PRINT);
+        // return $this->renderer->load('index', $data);
     }
 }
