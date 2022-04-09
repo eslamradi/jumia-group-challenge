@@ -2,7 +2,8 @@
     "name": "radi/jumia-exercise",
     "autoload": {
         "psr-4": {
-            "Core\\": "core/"
+            "Core\\": "core/",
+            "App\\": "src/"
         }
     },
     "authors": [
@@ -13,5 +14,8 @@
     ],
     "require": {
         "psr/container": "^2.0"
+    },
+    "scripts": {
+        "serve": "php -S 0.0.0.0:8010 -t public/"
     }
 }
