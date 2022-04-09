@@ -2,12 +2,13 @@
 
 namespace Core\Lib;
 
+use Core\Definitions\DatabaseBuilderInterface;
 use PDO;
 
 /**
  * query builder class for pdo statements wrpping
  */
-class QueryBuilder 
+class QueryBuilder implements DatabaseBuilderInterface
 {
 
     /**
