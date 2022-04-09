@@ -27,6 +27,7 @@ $routes($app);
 
 
 // handle an incoming Http Rquest 
+ob_start();
 $response = $app->handle(new Request);
-
-return $response;
+print $response;      // This IS printed, but just not right here.
+ob_end_flush();
