@@ -20,7 +20,7 @@ Topics to take in account:
 This repository represents my submission to this exercise.
 
 - Prequisites : 
-    - php: ^8.0.0 
+    - php: ^8.0.2 
     - Sqlite3 driver installed on your local machine
     - composer: ^2.0.0 
 - Steps to build and run the application: 
@@ -30,6 +30,7 @@ This repository represents my submission to this exercise.
         ```
         cd path/to/repo
         composer install // install dependencies
+        composer test // run tests
         composer serve // start the application
         ```
     3. the app is now up and running on port `8010`, visit this link in your browser `http://localhost:8010` to start testing the app
