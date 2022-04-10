@@ -1,5 +1,6 @@
 {
     "name": "radi/jumia-exercise",
+    "description": "this is the solution for jumia-market-group phpbe exercise",
     "autoload": {
         "psr-4": {
             "Core\\": "core/",
@@ -8,17 +9,19 @@
     },
     "authors": [
         {
-            "name": "Eslam Radi",
+            "name": "eslam radi",
             "email": "eslamradii@gmail.com"
         }
     ],
     "require": {
+        "php": "^8.0.2",
         "psr/container": "^2.0"
     },
     "scripts": {
         "serve": "php -S 0.0.0.0:8010 -t public/"
     },
     "require-dev": {
-        "symfony/var-dumper": "^6.0"
+        "symfony/var-dumper": "^6.0",
+        "phpunit/phpunit": "^9.5"
     }
 }
