@@ -33,7 +33,7 @@ This repository represents my submission to this exercise.
         composer test // run tests
         composer serve // start the application
         ```
-    3. the app is now up and running on port `8010`, visit this link in your browser [http://localhost:8010] to start testing the app
+    3. the app is now up and running on port `8010`, visit this link in your browser [http://localhost:8010](http://localhost:8010) to start testing the app
     
 
 ## Design and implemention 
